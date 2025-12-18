@@ -44,10 +44,56 @@ const gameboard = (function() {
             }
 
 
+        }
+
+        gameboardState: function() {
+
+
+            return gameboardStorage;
 
         }
+
 
     }
 })();
 
-// using IIFE for one instance and private variables made immediately
+const gameController = (function () {
+
+    let gameState = gameboard.gameboardState();
+
+    let winningCombos = [
+
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6],
+
+    ];
+
+
+    return {
+
+        checkWinner: function() {
+
+            gameState;
+
+            for (let i = 0; i < winningCombos.length; i++);
+
+            // i represents ONE winning combination
+
+
+
+
+
+        }
+
+
+    }
+
+
+
+})();
