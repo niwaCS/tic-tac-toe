@@ -44,7 +44,7 @@ const gameboard = (function() {
             }
 
 
-        }
+        },
 
         gameboardState: function() {
 
@@ -77,19 +77,33 @@ const gameController = (function () {
 
     return {
 
+
         checkWinner: function() {
+            
 
             gameState;
 
-            for (let i = 0; i < winningCombos.length; i++);
+            for (let i = 0; i < winningCombos.length; i++)
 
             // i represents ONE winning combination
 
+            if (gameState[winningCombos[i][0]] === gameState[winningCombos[i][1]]
+                && gameState[winningCombos[i][1]] === gameState[winningCombos[i][2]]
+            ) {
+
+                console.log(`${gameState[winningCombos[i][0]]} wins!`);
+
+                return gameState[winningCombos[i][0]];
+
+            }
+
+            return "no winner";
 
 
 
 
-        }
+        } 
+
 
 
     }
