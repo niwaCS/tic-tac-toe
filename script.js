@@ -85,8 +85,41 @@ const gameController = (function () {
 
     ];
 
+    let currentMarker = "X";
+
+    function switchTurn(){
+
+        currentMarker = currentMarker === "X" ? "O" : "X";
+
+
+    }
+
+
+
+
 
     return {
+
+        getCurrentMarker: function() {
+
+            return currentMarker;
+
+
+        },
+
+        playTurn: function(position) {
+
+            let currentMarker = this.getCurrentMarker();
+
+            gameboard.placeMarker(position, currentMarker);
+
+            switchTurn();
+
+
+
+        },
+
+
 
 
         checkWinner: function() {
