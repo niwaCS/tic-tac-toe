@@ -51,6 +51,17 @@ const gameboard = (function() {
 
             return gameboardStorage;
 
+        },
+
+       gameReset: function() {
+
+            gameboardStorage = ["", "", "", "", "", "", "", "", ""];
+
+            console.log('game has been reset');
+
+            return gameboardStorage;
+
+
         }
 
 
