@@ -107,19 +107,6 @@ const gameController = (function () {
 
         },
 
-        playTurn: function(position) {
-
-            let currentMarker = this.getCurrentMarker();
-
-            gameboard.placeMarker(position, currentMarker);
-
-            switchTurn();
-
-
-
-        },
-
-
 
 
         checkWinner: function() {
@@ -132,8 +119,8 @@ const gameController = (function () {
             // i represents ONE winning combination
 
             if (gameState[winningCombos[i][0]] === gameState[winningCombos[i][1]]
-                && gameState[winningCombos[i][1]] === gameState[winningCombos[i][2]]
-            ) {
+                && gameState[winningCombos[i][1]] === gameState[winningCombos[i][2]] && gameState[winningCombos[i][0]] != "") 
+                {
 
                 console.log(`${gameState[winningCombos[i][0]]} wins!`);
 
@@ -146,7 +133,28 @@ const gameController = (function () {
 
 
 
-        } 
+        },
+
+        playTurn: function(position) {
+
+            let currentMarker = this.getCurrentMarker();
+
+            gameboard.placeMarker(position, currentMarker);
+
+            let winningPlayer = this.checkWinner();
+
+            if (winningPlayer != "" && winningPlayer == "no winner") {
+
+                    switchTurn();
+
+            }
+        }
+
+
+
+
+
+        
 
 
 
