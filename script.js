@@ -4,6 +4,7 @@ const gameboard = (function() {
 
     return {
 
+
         placeMarker: function(position, marker) {
 
             if (gameboardStorage[position] === "") {
@@ -70,6 +71,19 @@ const gameboard = (function() {
 
 const gameController = (function () {
 
+
+    function PlayerContent(name, marker) {
+
+        this.name = name;
+        this.marker = marker;
+
+
+    }
+
+    const playerOne = new PlayerContent("Player 1", "X");
+    const playerTwo = new PlayerContent("Player 2", "O");
+
+
     let gameState = gameboard.gameboardState();
 
     let winningCombos = [
@@ -100,11 +114,17 @@ const gameController = (function () {
 
     return {
 
+
+
         getCurrentMarker: function() {
 
             return currentMarker;
 
 
+        },
+
+                getPlayers: function() {
+            return {playerOne, playerTwo};
         },
 
 
@@ -175,6 +195,9 @@ const gameController = (function () {
 
 
 
+
+
+
             
         
 
@@ -189,6 +212,9 @@ const gameController = (function () {
 
 
     }
+
+
+
 
 
 
