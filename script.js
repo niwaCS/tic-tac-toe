@@ -11,6 +11,8 @@ const gameboard = (function() {
 
                 gameboardStorage[position] = marker;
 
+                return true;
+
 
 
 
@@ -41,6 +43,7 @@ const gameboard = (function() {
                 let positionMessage = `Available spaces: ${unmarked}, Unavailable spaces: ${marked}`;
 
                 console.log(positionMessage);
+                return false;
 
             }
 
@@ -71,6 +74,8 @@ const gameboard = (function() {
 
 const gameController = (function () {
 
+    let isGameOver = false;
+
 
     function PlayerContent(name, marker) {
 
@@ -83,8 +88,6 @@ const gameController = (function () {
     const playerOne = new PlayerContent("Player 1", "X");
     const playerTwo = new PlayerContent("Player 2", "O");
 
-
-    let gameState = gameboard.gameboardState();
 
     let winningCombos = [
 
@@ -99,11 +102,12 @@ const gameController = (function () {
 
     ];
 
-    let currentMarker = "X";
+
+    let activePlayer = playerOne;
 
     function switchTurn(){
 
-        currentMarker = currentMarker === "X" ? "O" : "X";
+        activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
 
 
     }
@@ -118,7 +122,7 @@ const gameController = (function () {
 
         getCurrentMarker: function() {
 
-            return currentMarker;
+            return activePlayer.marker;
 
 
         },
@@ -132,19 +136,19 @@ const gameController = (function () {
         checkWinner: function() {
             
 
-            gameState;
+            const currentBoard = gameboard.gameboardState();
 
             for (let i = 0; i < winningCombos.length; i++)
 
             // i represents ONE winning combination
 
-            if (gameState[winningCombos[i][0]] === gameState[winningCombos[i][1]]
-                && gameState[winningCombos[i][1]] === gameState[winningCombos[i][2]] && gameState[winningCombos[i][0]] != "") 
+            if (currentBoard[winningCombos[i][0]] === currentBoard[winningCombos[i][1]]
+                && currentBoard[winningCombos[i][1]] === currentBoard[winningCombos[i][2]] && currentBoard[winningCombos[i][0]] != "") 
                 {
 
-                console.log(`${gameState[winningCombos[i][0]]} wins!`);
+                console.log(`${activePlayer.name} wins!`);
 
-                return gameState[winningCombos[i][0]];
+                return currentBoard[winningCombos[i][0]];
 
             }
 
@@ -157,26 +161,39 @@ const gameController = (function () {
 
         playTurn: function(position) {
 
-            let currentMarker = this.getCurrentMarker();
 
-            gameboard.placeMarker(position, currentMarker);
+            if (isGameOver) return;
 
-            let tieCheck = this.tieDetector();
+            let marker = this.getCurrentMarker();
 
-            let winningPlayer = this.checkWinner();
 
-            if (winningPlayer != "" && winningPlayer == "no winner" && tieCheck !== "tie") {
+            const moveWasLegal = gameboard.placeMarker(position, marker);
+
+            if (moveWasLegal) {
+
+                let winningPlayer = this.checkWinner();
+                let tieCheck = this.tieDetector(winningPlayer);
+
+
+                if (winningPlayer == "no winner" && tieCheck !== "tie") {
 
                     switchTurn();
 
+                } else {
+                    isGameOver = true;
+                }
             }
+
+            
         },
 
-        tieDetector: function() {
+        tieDetector: function(winner) {
 
-            let boardIsFull = gameState.every(element => element !== "");
+            const currentBoard = gameboard.gameboardState();
 
-            let noWinner = this.checkWinner() === "no winner";
+            let boardIsFull = currentBoard.every(element => element !== "");
+
+            let noWinner = winner === "no winner";
 
                 if (boardIsFull && noWinner) {
 
@@ -192,6 +209,17 @@ const gameController = (function () {
 
 
             },
+
+        gameReset: function() {
+
+            isGameOver = false;
+            activePlayer = playerOne;
+            gameboard.gameReset();
+
+
+
+
+        },
 
 
 
