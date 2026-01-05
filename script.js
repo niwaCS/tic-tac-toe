@@ -141,14 +141,44 @@ const gameController = (function () {
 
             gameboard.placeMarker(position, currentMarker);
 
+            let tieCheck = this.tieDetector();
+
             let winningPlayer = this.checkWinner();
 
-            if (winningPlayer != "" && winningPlayer == "no winner") {
+            if (winningPlayer != "" && winningPlayer == "no winner" && tieCheck !== "tie") {
 
                     switchTurn();
 
             }
-        }
+        },
+
+        tieDetector: function() {
+
+            let boardIsFull = gameState.every(element => element !== "");
+
+            let noWinner = this.checkWinner() === "no winner";
+
+                if (boardIsFull && noWinner) {
+
+                    console.log("tie");
+                    return "tie";
+
+
+                }
+
+                return false;
+
+
+
+
+            },
+
+
+
+            
+        
+
+
 
 
 
