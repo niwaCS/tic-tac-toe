@@ -247,3 +247,70 @@ const gameController = (function () {
 
 
 })();
+
+const displayController = (function () {
+
+
+    let gridHandler = document.querySelector(".grid-container");
+
+
+    function render() {
+
+        
+        const squares = document.querySelectorAll(".grid-container div");
+
+        const board = gameboard.gameboardState();
+
+        const resetBtn = document.querySelector(".reset-button")
+
+        resetBtn.addEventListener('click', () => {
+            gameController.gameReset();
+            render();
+        });
+
+
+        for (let i = 0; i < squares.length; i++) {
+
+            squares[i].textContent=board[i];
+
+
+        }
+
+
+    }
+
+        gridHandler.addEventListener("click", function(event) {
+        let index = Number(event.target.dataset.index);      
+        gameController.playTurn(index); 
+        render(); 
+
+       
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})();
