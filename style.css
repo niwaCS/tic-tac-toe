@@ -1,0 +1,36 @@
+.main-container {
+
+    display: grid;
+    place-items: center;
+    height: 100vh;
+
+
+}
+
+
+
+
+.grid-container {
+
+
+    height: 300px;
+    width: 300px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 2px dotted black;
+
+
+}
+
+.grid-container > div {
+    aspect-ratio: 1/1;
+    border: 1px solid red;
+    color: black;
+
+
+
+
+
+}
+
+
