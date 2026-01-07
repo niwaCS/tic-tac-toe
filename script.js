@@ -162,26 +162,34 @@ const gameController = (function () {
         playTurn: function(position) {
 
 
-            if (isGameOver) return;
+            if (isGameOver) return {status: "already over"};
 
             let marker = this.getCurrentMarker();
 
 
             const moveWasLegal = gameboard.placeMarker(position, marker);
 
+            if (!moveWasLegal) return {status: "invalid"};
+
             if (moveWasLegal) {
 
                 let winningPlayer = this.checkWinner();
                 let tieCheck = this.tieDetector(winningPlayer);
 
-
-                if (winningPlayer == "no winner" && tieCheck !== "tie") {
-
-                    switchTurn();
-
-                } else {
+                if(winningPlayer !== "no winner") {
                     isGameOver = true;
+                    return {status: "win", player:activePlayer.name};
                 }
+
+                if(tieCheck==="tie") {
+                    isGameOver = true;
+                    return {status: "tie"};
+                }
+
+                switchTurn();
+                return{status: "ongoing", currentPlayer: activePlayer.name};
+
+
             }
 
             
@@ -222,27 +230,7 @@ const gameController = (function () {
         },
 
 
-
-
-
-
-            
-        
-
-
-
-
-
-
-
-        
-
-
-
     }
-
-
-
 
 
 
@@ -252,9 +240,13 @@ const displayController = (function () {
 
 
     let gridHandler = document.querySelector(".grid-container");
+    const winningMsg = document.querySelector("#winningMsg");
+    const tieGameMsg = document.querySelector("#tieMsg");
+    const turnMsg = document.querySelector("#turnMsg");
 
 
     function render() {
+
 
         
         const squares = document.querySelectorAll(".grid-container div");
@@ -265,6 +257,10 @@ const displayController = (function () {
 
         resetBtn.addEventListener('click', () => {
             gameController.gameReset();
+            winningMsg.textContent = "";
+            tieGameMsg.textContent ="";
+            turnMsg.textContent="";
+
             render();
         });
 
@@ -280,13 +276,43 @@ const displayController = (function () {
     }
 
         gridHandler.addEventListener("click", function(event) {
-        let index = Number(event.target.dataset.index);      
-        gameController.playTurn(index); 
-        render(); 
+            let index = Number(event.target.dataset.index);    
+            const result = gameController.playTurn(index);  
+            /* result holds object that playTurn returns */
+            render(); 
+
+
+            if (result.status === "win") {
+                winningMsg.textContent = result.player + " wins!";
+                turnMsg.textContent = "";
+            } 
+
+            if (result.status === "tie") {
+                tieGameMsg.textContent = "it's a tie!";
+                turnMsg.textContent = "";
+            }
+
+            if (result.status === "ongoing") {
+                turnMsg.textContent = result.currentPlayer + "'s turn!";
+            }
+
 
        
 
     });
+
+
+
+    
+
+    
+
+
+
+
+
+
+
 
 
 
