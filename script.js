@@ -230,6 +230,8 @@ const gameController = (function () {
         },
 
 
+
+
     }
 
 
@@ -243,6 +245,22 @@ const displayController = (function () {
     const winningMsg = document.querySelector("#winningMsg");
     const tieGameMsg = document.querySelector("#tieMsg");
     const turnMsg = document.querySelector("#turnMsg");
+    const createUser = document.querySelector(".createUser");
+
+
+    createUser.addEventListener('click', () => {
+
+        let askPlayerOneName = prompt("Enter your username");
+        let askPlayerTwoName = prompt("Enter your username");
+
+        const players = gameController.getPlayers();
+
+        players.playerOne.name = askPlayerOneName;
+        players.playerTwo.name = askPlayerTwoName;
+
+
+
+    });
 
 
     function render() {
@@ -253,7 +271,8 @@ const displayController = (function () {
 
         const board = gameboard.gameboardState();
 
-        const resetBtn = document.querySelector(".reset-button")
+        const resetBtn = document.querySelector(".reset-button");
+
 
         resetBtn.addEventListener('click', () => {
             gameController.gameReset();
