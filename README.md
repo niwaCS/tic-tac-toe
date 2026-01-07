@@ -2,6 +2,9 @@
 
 A browser-based tic-tac-toe game built with vanilla JavaScript using the module pattern.
 
+# Live-Preview
+- https://niwacs.github.io/tic-tac-toe/
+
 ## Features
 
 - Two-player gameplay
