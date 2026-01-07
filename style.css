@@ -1,8 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-famiy: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+
+
+
+
 .main-container {
 
     display: grid;
     place-items: center;
     height: 100vh;
+    gap: 20px;
 
 
 }
@@ -18,19 +34,49 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     border: 2px dotted black;
+    background-color: #333;
+    gap: 4px;
 
 
 }
+
 
 .grid-container > div {
+    background-color: #4a4a4a;
     aspect-ratio: 1/1;
-    border: 1px solid red;
     color: black;
-
-
-
-
+    display: grid;
+    place-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
 
 }
+
+.grid-container > div:hover {
+    background-color: #eee;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.UI-container {
+    text-align: center;
+    font-size: 1.25rem;
+    min-height: 30px;
+}
+
+
+
 
 
